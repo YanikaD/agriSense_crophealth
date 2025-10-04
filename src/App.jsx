@@ -131,14 +131,14 @@ const AgriMonitorPitchApp = () => {
   const isAlert = currentScreen === "alert";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-start pt-4 pb-6 px-4">
       {/* Toggle Buttons */}
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-1.5">
+      <div className="w-full max-w-sm flex gap-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-1.5 mb-4">
         {["alert", "healthy"].map((screen) => (
           <button
             key={screen}
             onClick={() => setCurrentScreen(screen)}
-            className={`px-4 py-2 rounded-lg font-semibold text-xs transition-all duration-300 ${
+            className={`flex-1 px-4 py-2 rounded-lg font-semibold text-xs transition-all duration-300 ${
               currentScreen === screen
                 ? screen === "alert"
                   ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg scale-105"
@@ -153,15 +153,14 @@ const AgriMonitorPitchApp = () => {
 
       {/* Phone Container */}
       <div
-        className="w-full max-w-sm bg-gradient-to-b from-gray-900 to-black rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl p-2.5 sm:p-3"
+        className="w-full max-w-sm bg-gradient-to-b from-gray-900 to-black rounded-[2.5rem] shadow-2xl p-3"
         style={{ 
-          height: "min(812px, calc(100vh - 4rem))",
-          maxHeight: "812px",
-          maxWidth: "375px"
+          maxWidth: "420px",
+          height: "min(85vh, 800px)"
         }}
       >
-        <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] h-full overflow-hidden relative flex flex-col shadow-inner">
-          {/* Header */}
+        <div className="bg-white rounded-[2rem] h-full overflow-hidden relative flex flex-col shadow-inner">
+          {/* Header - Fixed */}
           <div
             className={`flex-shrink-0 ${
               isAlert
@@ -184,7 +183,7 @@ const AgriMonitorPitchApp = () => {
             </div>
           </div>
 
-          {/* Map */}
+          {/* Map - Fixed */}
           <div className="relative bg-black flex-shrink-0">
             <img 
               src={isAlert ? fullmapImg : fullmapHealthyImg} 
@@ -204,7 +203,7 @@ const AgriMonitorPitchApp = () => {
             </div>
           </div>
 
-          {/* Carousel */}
+          {/* Carousel - Fixed */}
           <div className="flex-shrink-0 py-2 sm:py-2.5 flex justify-center bg-gradient-to-b from-gray-50 to-white border-b border-gray-200">
             <div className="flex items-center gap-2">
               <button className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white shadow-md hover:shadow-lg flex items-center justify-center text-xs font-bold text-gray-600 hover:text-gray-900 transition-all hover:scale-105">
@@ -240,8 +239,8 @@ const AgriMonitorPitchApp = () => {
             </div>
           </div>
 
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3 bg-gradient-to-b from-white to-gray-50">
+          {/* Scrollable content - Only this part scrolls */}
+          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3 bg-gradient-to-b from-white to-gray-50" style={{ minHeight: 0 }}>
             {/* Summary */}
             <div className={`${
               isAlert 
