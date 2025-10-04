@@ -563,7 +563,7 @@ const recommendations = {
     ],
   },
   step3: {
-    title: "ป้องกันการแพร่กระจาย",
+    title: "ป้องกันปัญหา",
     subtitle: "ดำเนินการป้องกันไม่ให้ปัญหาลุกลาม",
     cases: [
       {
