@@ -8,15 +8,24 @@ import fullmapImg from "./assets/fullmap.png";
 import fullmapHealthyImg from "./assets/fullmapHealthy.png";
 
 const AgriMonitorPitchApp = () => {
+  const [tailwindLoaded, setTailwindLoaded] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState("alert");
+
   useEffect(() => {
     if (!document.getElementById("tailwind-cdn")) {
       const script = document.createElement("script");
       script.id = "tailwind-cdn";
       script.src = "https://cdn.tailwindcss.com";
+      script.onload = () => {
+        // Wait a bit for Tailwind to fully initialize
+        setTimeout(() => setTailwindLoaded(true), 100);
+      };
       document.head.appendChild(script);
+    } else {
+      // Tailwind already loaded
+      setTailwindLoaded(true);
     }
   }, []);
-  const [currentScreen, setCurrentScreen] = useState("alert");
 
   const alertData = {
     title: "พบความผิดปกติในสวน",
@@ -129,6 +138,38 @@ const AgriMonitorPitchApp = () => {
 
   const currentData = currentScreen === "alert" ? alertData : healthyData;
   const isAlert = currentScreen === "alert";
+
+  // Show loading state while Tailwind loads
+  if (!tailwindLoaded) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            width: '40px', 
+            height: '40px', 
+            border: '4px solid #f3f4f6',
+            borderTop: '4px solid #ef4444',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 16px'
+          }}></div>
+          <p style={{ color: '#6b7280', fontSize: '14px' }}>Loading...</p>
+        </div>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-start pt-4 pb-6 px-4">
